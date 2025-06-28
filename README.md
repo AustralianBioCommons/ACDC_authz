@@ -1,3 +1,3 @@
-![components](ACDC_authz.png "Components")
+![components](diagrams/ACDC_authz.svg "Components")
 
-![ux sequence](ACDC_authz_experience.png "UX sequence")
+![ux sequence](diagrams/ACDC_authz_experience.svg "UX sequence")

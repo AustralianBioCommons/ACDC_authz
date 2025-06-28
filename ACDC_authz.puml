@@ -19,11 +19,9 @@ skinparam nodeBorderColor DarkGray
 skinparam nodeBackgroundColor #f8f8f8
 skinparam DefaultTextAlignment Center
 
-'together {
-  actor Applicant as "Data Consumer"
-  actor Approver
-  actor APIUser
-'}
+actor Applicant as "Data Applicant"
+actor Approver
+actor APIUser
 
 node REMS {
   component WebApp << Single-page App >>
@@ -32,7 +30,7 @@ node REMS {
 
 
 node Auth0 {
-    component RBAC 
+    component RBAC
 }
 
 node Gen3 {
@@ -46,26 +44,20 @@ database Postgres
 node EmailServer << SMTP >> {
 }
 
-Applicant -down-> WebApp
-Applicant -down-> Portal
-Approver -down-> WebApp
-APIUser .down.> API : "use with key"
+Applicant --> WebApp
+Applicant --> Portal
+Approver --> WebApp
+APIUser ...> API : "use with key"
 
-WebApp -down-> API : "REST"
-Portal -right-> Fence
-
-Fence --> Auth0 : "OIDC\n\n"
+WebApp --> API : "REST"
 WebApp --> Auth0 : "OIDC"
+
+Portal --> Fence
+Fence --> Auth0 : "OIDC"
+
 API --> Auth0 : "OIDC"
-
-
-API -left-> RBAC : "push\nentitlements"
-'note on link
-'  push  entitlements
-'endnote
-
+API --> RBAC : "push\nentitlements"
 API -down-> Postgres
-API -down-> EmailServer : "email notifications"
-
+API -down-> EmailServer : "email\nnotifications"
 
 @enduml

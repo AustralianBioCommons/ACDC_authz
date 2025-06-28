@@ -1,17 +1,17 @@
 @startuml
 
 actor DataManager as "Data Manager (Baker)"
-actor Applicant as "Data Applicant"
 participant REMS
 participant Auth0
 participant Gen3
+actor Applicant as "Data Applicant"
 
 DataManager -> REMS : Green light
 REMS -> REMS : user_id:dataset_id\nentitlement set
 REMS -> Auth0 : entitlements pushed
 REMS -> Applicant : email notification sent
-Applicant -> Gen3 : logs in to data commons
-Gen3 -> Auth0 : entitlements\nfrom OIDC groups
-Gen3 -> Applicant : shows appropriate data
+Applicant -> Auth0 : logs in to data commons
+Auth0 -> Gen3 : entitlements\nfrom OIDC groups
+Gen3 -> Applicant : displays appropriate data
 
 @enduml
